@@ -75,6 +75,8 @@ class Chromosome {
   // as well as no indices above the range (length) of the chromosome.
   bool is_valid() const;
 
+  double get_longest_distance();
+
   // Find whether a certain value appears in a given range of the chromosome.
   // Returns true if value is in order_ within the specified the range specified
   // [begin, end) and false otherwise.

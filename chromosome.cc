@@ -87,6 +87,22 @@ Chromosome::get_fitness() const
   // Add your implementation here
 }
 
+double Chromosome::get_longest_distance() {
+  auto cities_size = cities_ptr_->size();
+  auto longest = 0;
+  for (int i = 0; i < cities_size; i++){
+    for (int j = i + 1; j < cities_size; j++){
+      const auto dx = cities_ptr_->cities_t[i].first - cities_[j].first;
+      const auto dy = cities_ptr_->cities_t[i].second - cities_[j].second;
+      auto current = std::hypot(dx, dy);
+      if (longest < current){
+        longest = current;
+      }
+    }
+  }
+  return longest;
+}
+
 // A chromsome is valid if it has no repeated values in its permutation,
 // as well as no indices above the range (length) of the chromosome.
 // We implement this check with a sort, which is a bit inefficient, but simple
