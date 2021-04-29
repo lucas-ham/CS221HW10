@@ -13,7 +13,8 @@
 Chromosome::Chromosome(const Cities* cities_ptr)
   : cities_ptr_(cities_ptr),
     order_(random_permutation(cities_ptr->size())),
-    generator_(rand())
+    generator_(rand()),
+    longest_(get_longest_distance() * (cities_ptr->size() -1))
 {
   assert(is_valid());
 }
@@ -84,6 +85,8 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
+  auto path_distance = cities_ptr_->total_path_distance(order_);
+  return longest_ - path_distance;
   // Add your implementation here
 }
 
@@ -92,8 +95,8 @@ double Chromosome::get_longest_distance() {
   auto longest = 0;
   for (int i = 0; i < cities_size; i++){
     for (int j = i + 1; j < cities_size; j++){
-      const auto dx = cities_ptr_->cities_t[i].first - cities_[j].first;
-      const auto dy = cities_ptr_->cities_t[i].second - cities_[j].second;
+      const auto dx = cities_ptr_->get_coords_by_index(i).first - cities_ptr_->get_coords_by_index(j).first;
+      const auto dy = cities_ptr_->get_coords_by_index(i).second - cities_ptr_->get_coords_by_index(j).second;
       auto current = std::hypot(dx, dy);
       if (longest < current){
         longest = current;

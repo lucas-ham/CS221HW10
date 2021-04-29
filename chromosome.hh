@@ -77,6 +77,8 @@ class Chromosome {
 
   double get_longest_distance();
 
+  double longest_;
+
   // Find whether a certain value appears in a given range of the chromosome.
   // Returns true if value is in order_ within the specified the range specified
   // [begin, end) and false otherwise.
