@@ -93,6 +93,19 @@ Chromosome::get_fitness() const
 bool
 Chromosome::is_valid() const
 {
+  std::vector<bool> here(cities_ptr_->size(), 0);
+  for (auto index : order_ ){
+    if (here[index]){
+      break;
+    }
+    here[index] = 1;
+  }
+  for (bool value: here){
+    if (!value){
+      return false;
+    }
+  }
+  return true;
   // Add your implementation here
 }
 
