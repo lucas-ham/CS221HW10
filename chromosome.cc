@@ -139,5 +139,11 @@ Chromosome::is_valid() const
 bool
 Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
+  for (int i = begin; i < end; i++){
+    if (order_[i] == value){
+      return true;
+    }
+  }
+  return false;
   // Add your implementation here
 }
