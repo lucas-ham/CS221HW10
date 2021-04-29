@@ -31,6 +31,11 @@ Chromosome::~Chromosome()
 void
 Chromosome::mutate()
 {
+  srand (time(NULL));
+
+  auto first = rand() % cities_ptr_->size(); //May change later
+  auto second = rand() % cities_ptr_->size();
+  std::swap(order_[first],order_[second]);
   // Add your implementation here
 
   assert(is_valid());
