@@ -15,6 +15,9 @@ Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
     auto next = new Chromosome(cities_ptr);
     pop_.push_back(next);
   }
+  std::random_device rd;
+  auto seed = rd();
+  generator_.seed(seed);
   // Add your implementation here
 }
 
@@ -56,5 +59,19 @@ const Chromosome* Deme::get_best() const
 // return a pointer to that chromosome.
 Chromosome* Deme::select_parent()
 {
+  auto total_fitness = 0;
+  for (auto chromosome : pop_){
+    total_fitness += chromosome->get_fitness();
+  }
+  std::uniform_real_distribution<double> dist(0.0, pop_.size());
+  auto parital_sum = dist(generator_);                                //use generator_ to get a random int between 0 and pop_size()
+
+  for (auto i = 0; i < pop_.size(); i++){
+    parital_sum += pop_[i]->get_fitness();
+    if (total_fitness < parital_sum){
+      return pop_[i];
+    }
+  }
+  return pop_[pop_.size() - 1];
   // Add your implementation here
 }
