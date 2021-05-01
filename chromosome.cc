@@ -50,6 +50,17 @@ Chromosome::recombine(const Chromosome* other)
   assert(is_valid());
   assert(other->is_valid());
 
+  srand(time(NULL));
+  auto start = rand() % cities_ptr_->size();
+  auto end = rand() % cities_ptr_->size();                    //create a random swtich interval
+  std::pair <Chromosome*, Chromosome*> outpair;                   //initialize the pair
+
+  outpair.first = create_crossover_child(this, other, start, end);
+  outpair.second = create_crossover_child(other, this, start, end);  //create chromosomes using create_crossover_child
+
+  return outpair;
+
+
   // Add your implementation here
 }
 
