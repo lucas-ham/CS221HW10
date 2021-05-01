@@ -36,6 +36,29 @@ Deme::~Deme()
 // After we've generated pop_size new chromosomes, we delete all the old ones.
 void Deme::compute_next_generation()
 {
+  std::vector<Chromosome*> new_pop_;
+  std::uniform_real_distribution<double> dist_maker(0.0, 1.0);
+
+  while (new_pop_.size() < pop_.size()){
+    auto p1 = select_parent();
+    auto p2 = select_parent();              //get 2 random parents
+    auto rand1 = dist_maker(generator_);
+    if (rand1 < mut_rate_){
+      p1->mutate();
+    }
+    auto rand2 = dist_maker(generator_);
+    if (rand2 < mut_rate_){
+      p2->mutate();
+    }                                       //mutate parents if necessary
+
+    auto next2 = p1->mrecombine(p2);
+    new_pop_.push_back(next2.first);
+    new_pop_.push_back(next2.second);       //add the new children to the new population
+  }
+
+  pop_.clear();
+  pop_ = new_pop_;
+
   // Add your implementation here
 }
 
@@ -63,7 +86,7 @@ Chromosome* Deme::select_parent()
   for (auto chromosome : pop_){
     total_fitness += chromosome->get_fitness();
   }
-  std::uniform_real_distribution<double> dist(0.0, pop_.size());
+  std::uniform_real_distribution<int> dist(0, pop_.size());
   auto parital_sum = dist(generator_);                                //use generator_ to get a random int between 0 and pop_size()
 
   for (auto i = 0; i < pop_.size(); i++){
