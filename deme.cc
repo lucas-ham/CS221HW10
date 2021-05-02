@@ -12,8 +12,8 @@ Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 : mut_rate_(mut_rate)
 {
   while (pop_.size() < pop_size){
-    auto next = new Chromosome(cities_ptr);
-    pop_.push_back(next);
+    Chromosome next = Chromosome(cities_ptr);
+    pop_.push_back(&next);
   }
   std::random_device rd;
   auto seed = rd();
