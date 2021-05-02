@@ -89,7 +89,7 @@ Chromosome* Deme::select_parent()
   std::uniform_real_distribution<int> dist(0, pop_.size());
   auto parital_sum = dist(generator_);                                //use generator_ to get a random int between 0 and pop_size()
 
-  for (auto i = 0; i < pop_.size(); i++){
+  for (unsigned long i = 0; i < pop_.size(); i++){
     parital_sum += pop_[i]->get_fitness();
     if (total_fitness < parital_sum){
       return pop_[i];
