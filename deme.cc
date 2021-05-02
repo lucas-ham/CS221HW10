@@ -51,7 +51,7 @@ void Deme::compute_next_generation()
       p2->mutate();
     }                                       //mutate parents if necessary
 
-    auto next2 = p1->mrecombine(p2);
+    auto next2 = p1->recombine(p2);
     new_pop_.push_back(next2.first);
     new_pop_.push_back(next2.second);       //add the new children to the new population
   }
